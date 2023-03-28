@@ -37,3 +37,11 @@ basic.forever(function () {
     ticks += 1
     basic.pause(1000)
 })
+basic.forever(function () {
+    basic.pause(1500)
+    if (input.buttonIsPressed(Button.B)) {
+    	
+    } else {
+        bird.change(LedSpriteProperty.Y, 1)
+    }
+})
