@@ -1,20 +1,10 @@
+function Score () {
+	
+}
 input.onButtonPressed(Button.A, function () {
     bird.change(LedSpriteProperty.Y, 1)
 })
-input.onButtonPressed(Button.AB, function () {
-    game.pause()
-})
-input.onButtonPressed(Button.B, function () {
-    bird.change(LedSpriteProperty.Y, -1)
-})
-let empty_obstacle = 0
-let ticks = 0
-let bird: game.LedSprite = null
-bird = game.createSprite(0, 2)
-bird.set(LedSpriteProperty.Blink, 300)
-let obstacles: game.LedSprite[] = []
-let index = 0
-basic.forever(function () {
+function Mechanics () {
     while (obstacles.length > 0 && obstacles[0].get(LedSpriteProperty.X) == 0) {
         obstacles.removeAt(0).delete()
     }
@@ -31,17 +21,39 @@ basic.forever(function () {
     }
     for (let obstacle of obstacles) {
         if (obstacle.get(LedSpriteProperty.X) == bird.get(LedSpriteProperty.X) && obstacle.get(LedSpriteProperty.Y) == bird.get(LedSpriteProperty.Y)) {
+            music.setVolume(88)
+            music.playMelody("C5 B A G G G - - ", 180)
             game.gameOver()
         }
     }
     ticks += 1
-    basic.pause(1000)
+    basic.pause(500)
+}
+function Bird () {
+	
+}
+input.onButtonPressed(Button.AB, function () {
+    game.pause()
+})
+input.onButtonPressed(Button.B, function () {
+    bird.change(LedSpriteProperty.Y, -1)
+})
+function Config () {
+    game.setScore(0)
+    bird = game.createSprite(0, 2)
+    bird.set(LedSpriteProperty.Blink, 300)
+    obstacles = []
+    index = 0
+}
+let index = 0
+let empty_obstacle = 0
+let ticks = 0
+let obstacles: game.LedSprite[] = []
+let bird: game.LedSprite = null
+Config()
+basic.forever(function () {
+    Mechanics()
 })
 basic.forever(function () {
-    basic.pause(1500)
-    if (input.buttonIsPressed(Button.B)) {
-    	
-    } else {
-        bird.change(LedSpriteProperty.Y, 1)
-    }
+    Bird()
 })
